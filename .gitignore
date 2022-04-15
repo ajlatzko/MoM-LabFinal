@@ -4,3 +4,4 @@
 *.gz
 *.out
 *.pdf
+!MoMLab_Report_Final.pdf
