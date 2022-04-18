@@ -52,25 +52,127 @@ Section ????? \quad April 22, 2022}
 \thispagestyle{empty}
 
 \begin{abstract}
-\lipsum[1]
+This experiment uses knowledge of the two-dimensional principal stress state to determine the internal pressure in an unopened soda can.
+Thin-walled pressure vessel theory is used in conjunction with Mohr’s theories on principal stresses to report the internal can pressure.
+This result is compared to another method based upon the ideal gas law.
+The hoop stress in the can is \textcolor{red}{XX $\pm$ XX} kPa and the longitudinal stress is \textcolor{red}{XX $\pm$ XX} kPa.
+The internal pressure reported by the mechanics of materials approach is \textcolor{red}{XX $\pm$ XX} kPa.
+The internal pressure reported by the ideal gas law method is \textcolor{red}{XX $\pm$ XX} kPa.
+
 \end{abstract}
 
 \begin{IEEEkeywords}
-modulus of elasticity, strain, stress, tensile strength 
+plane stress, principal stresses, strain gauge rosette, thin-walled pressure vessel
 \end{IEEEkeywords}
 
 \section{Introduction}
-\IEEEPARstart{H}{ello} world. \lipsum[2-5]
+\IEEEPARstart{C}{ylindrical} pressure vessels are an effective way to store gasses or liquids which must be kept at certain high pressures.
+As such, knowing the operating and current pressures in these vessels is imperative to ensuring user safety; catastrophic failures in these vessels can sometimes be fatal.
+The stresses in the walls of these vessels can be used to determine the overall pressure within the vessel.
+This study seeks the pressure in a sealed soda can.
+
+The can is said to be a thin-walled pressure vessel.
+The diameter of the can is much greater than its wall thickness, leading to the  assumption that there is no stress in the direction of the thickness of the can, so the stresses in the vessel wall can be analyzed as a two-dimensional stress state, the plane stress condition.
+
+To analyze this stress state, strain gauges can be affixed in a 0-45-90$^\circ$ rosette on the side of the can to record the strains on the walls.
+Using multiple strain gauges allows an experimenter to determine the complete strain state, including the shear strain.
+As the strain gauge is a transducer, the strains are recorded as a voltage difference, $V_{amp}$, and are calculated according to \eqref{eq:strain},  where $V_s$ is the excitation voltage for the circuit, and $G_f$ is the gauge factor of the strain gauge, given by the manufacturer.
+\begin{equation}
+\label{eq:strain}
+\varepsilon=\frac{4\Delta V_{amp}}{V_s G_f}
+\end{equation}
+
+These strain gauges work in conjunction with a quarter Wheatstone bridge circuit to record meaningful voltage differences (Fig. \textcolor{red}{FIG NEEDED}).
+The strain gauge acts as a variable resistor.
+The change in voltage across the bridge as the strain gauge moves and varies its resistance is the voltage used to compute strain in \eqref{eq:strain}.
+Each member of the strain gauge rosette has its own individual Wheatstone bridge circuit fed by an excitation voltage.
+
+In plane strain, the shear strain $\gamma_{xy}$ can be computed using the 45$^\circ$ strain gauge value according to \eqref{eq:strainThet}, where $\varepsilon_x$ and $\varepsilon_y$ are the strains from the 0$^\circ$ and 90$^\circ$ strain gauges, and $\theta$ is 45$^\circ$ for this rosette [\textcolor{red}{CITATION NEEDED}].
+\begin{equation}
+\label{eq:strainThet}
+\varepsilon_\theta=\frac{\varepsilon_x+\varepsilon_y}{2}-\frac{\varepsilon_x-\varepsilon_y}{2}\cos(2\theta)+\gamma_{xy}\sin(2\theta)
+\end{equation}
+
+While the experimenter should attempt to align the strain gauge rosette along the principal axes, along the canls central axis and along its circumference, the true principal strain should be found according to \eqref{eq:princStrain}, where $\varepsilon_{1,2}$ are the principal strains for the plane strain condition.
+This is based upon the concepts of Mohr’s circle, a geometric way to identify principal stresses and strains in a material.
+\begin{equation}
+\label{eq:princStrain}
+\varepsilon_{1,2}=\frac{\varepsilon_x+\varepsilon_y}{2} \pm \sqrt{\left(\frac{\varepsilon_x-\varepsilon_y}{2}\right)^2+\left(\frac{\gamma_{xy}}{2}\right)^2}
+\end{equation}
+
+With principal strains in hand, the principal stresses in the vessel can thus be computed.
+These principal stresses in the wall arise from the internal pressure pushing on the can wall, so knowing the principal stresses in the wall may lead to the pressure within the can.
+In 2D strain, the well-known Hooke’s law relating stress to strain is given directionally as \eqref{eq:sigma1} and \eqref{eq:sigma2}, where $\sigma_{1,2}$ are the principal stress on the wall, $E$ is the modulus of elasticity for the can material, aluminum alloy, $\nu$ is Poisson’s ratio, and $\varepsilon_{1,2}$ are the principal strains, found by using \eqref{eq:princStrain} with the recorded strains \cite{b1}.
+\begin{subequations}
+\begin{align}
+\sigma_1&=\frac{E}{1-\nu^2}\left(\varepsilon_1+\nu\varepsilon_2\right) \label{eq:sigma1} \\
+\sigma_2&=\frac{E}{1-\nu^2}\left(\varepsilon_2+\nu\varepsilon_1\right) \label{eq:sigma2}
+\end{align}
+\end{subequations}
+For thin-walled pressure vessels, the 2D stress state is described by the longitudinal stress, along the vessel's central axis, and hoop stress, along its circumference, which can be computed with the principal strains above.
+The free-body diagram (Fig. \textcolor{red}{FIG NEEDED}) can be a helpful tool in relating these stresses to the can's internal pressure \cite{b1}.
+
+The force balance for this diagram is \eqref{eq:vesselForce},
+\begin{equation}
+\label{eq:vesselForce}
+(2rL)P=(2Lt)\sigma_H
+\end{equation}
+as pressure $P$ acts on the can inner surface area, $2rL$, and is resisted by the circumferential stress $\sigma_H$ acting on wall area $2Lt$.
+The expression \eqref{eq:vesselForce} can be solved for the hoop stress $\sigma_H$ as \eqref{eq:hoopStress}.
+\begin{equation}
+\label{eq:hoopStress}
+\sigma_H=\frac{Pr}{t}
+\end{equation}
+
+This hoop stress is related to its orthogonal longitudinal stress $\sigma_L$ with relationship \eqref{eq:longStress}, known from thin-walled pressure vessel theory \cite{b1}.
+\begin{equation}
+\label{eq:longStress}
+\sigma_L=\frac{1}{2}\sigma_H
+\end{equation}
+
+These hoop and longitudinal stresses are assumed to be the principal stresses $\sigma_1$ and $\sigma_2$.
+Thus the relationships from \eqref{eq:hoopStress} and \eqref{eq:sigma1} can be rearranged to yield a functional relationship between principal strain and internal pressure \eqref{eq:princStrainFin} \cite{b1}.
+\begin{equation}
+\label{eq:princStrainFin}
+\varepsilon_1=\frac{Pr}{2Et}(2-\nu)
+\end{equation}
 
 \section{Procedure}
 
-\subsection{Setup}
+\subsection{Instrumenting the Soda Can}
 
-\lipsum[6]
+The can must first be outfitted with the strain  gauge rosette.
+First, the decorative wrapping on the beverage can is scrubbed off with methanol so that this wrapping does not affect the strain of the aluminum.
+Once the surface is properly cleaned, painter's tape is used to create an approximately 90$^\circ$ L-shaped guideline towards the outer left and bottom edges of the cleaned surface for strain gauge placement.
 
-\subsection{Experimentation}
+To place the strain gauge rosette, clear packing tape is placed over the top of the rosette, opposite the side that will contact the surface of the can.
+The tacky side of the taped strain rosette is then gently laid onto the can surface, such that the 0$^\circ$ and 90$^\circ$ strain gauges are aligned with the taped guidelines.
+When the placement of the strain rosette is properly aligned, part of the taped side is lifted, and glue is applied to the can.
+The strain gauge rosette is replaced over top of the glue and allowed to cure.
 
-\lipsum[7-8]
+\subsection{Wheatstone Bridge}
+
+Each strain gauge works as a variable resistor in a Wheatstone bridge, whose voltage difference is recorded for the strain.
+Three Wheatstone bridge configurations are wired onto a simple breadboard.
+Each bridge also makes use of a pre-amplifier, as the voltages passing through the circuit are expected to be very small.
+An excitation voltage of 3.3 V is wired so as to pass across each bridge from an external power supply.
+This excitation voltage $V_s$ and the voltage difference $V_{amp}$ for each of the three bridges is recorded with a SADI DAQ device.
+
+\subsection{Data Acquisition}
+
+The SADI DAQ which records the voltage difference is fed into a LabVIEW virtual instrument.
+The LabVIEW VI reads the $V_{amp}$ for each bridge as $V_{ampx}$ for the 0$^\circ$ gauge, $V_{ampt}$  for the 45$^\circ$ gauge, and $V_{ampy}$ for the 90$^\circ$ gauge.
+These are observed with a $\pm$5.12 V gain window.
+
+\subsection{Ideal Gas Law Pressure Determination Method}
+
+A secondary method is also used based upon the ideal gas law.
+For this method, the temperature of the room is measured and the can is allowed to reach thermodynamic equilibrium with the room.
+The unopened, instrumented can is weighed on the lab scale, and its initial weight is recorded.
+After the can is opened, the instrumented can is weighed again to record its final weight.
+Next, a bottle filled with an arbitrary amount of water is weighed on the lab scale.
+Water is poured from the bottle into the open can until the headspace between the soda and the top of the can is filled.
+The bottle is weighed again.
 
 \section{Results}
 
@@ -98,10 +200,10 @@ x=\frac{-b\pm\sqrt{b^2-4ac}}{2a}
 
 \begin{thebibliography}{00}
 \bibitem{b1} G. Subhash and S. Ridgeway, ``Thin-walled Pressure Vessels," in \textit{Mechanics of Materials Laboratory Course}. San Rafael, CA: Morgan \& Claypool, 2018, ch. 3, pp. 113--132.
-\bibitem{b2} F. P. Beer, E. R. Johnston, J. T. DeWolf, and D. F. Mazurek, \textit{Mechanics of Materials}, 8th ed. New York, NY: McGraw-Hill, 2020.
-\bibitem{b3} D. R. Askeland, F. Haddleton, P. Green, and H. Robertson, ``Nonferrous Alloys," in \textit{The Science and Engineering of Materials}, 3rd ed. Berlin, Germany: Springer, 1996, ch. 13, pp. 401--436.
-\bibitem{b4} J. W. Bray, ``Aluminum Mill and Engineered Wrought Products," in \textit{Properties and Selection: Nonferrous Alloys and Special-Purpose Materials} (ASM Handbook, Vol. 2). Russell Township, OH: ASM International, 1990.
-\bibitem{b5} Engineering ToolBox, (2018). \textit{Carbon Dioxide - Thermophysical Properties}. [Online] Available: \url{https://www.engineeringtoolbox.com/CO2-carbon-dioxide-properties-d_2017.html}
+%\bibitem{b2} F. P. Beer, E. R. Johnston, J. T. DeWolf, and D. F. Mazurek, \textit{Mechanics of Materials}, 8th ed. New York, NY: McGraw-Hill, 2020.
+\bibitem{b2} D. R. Askeland, F. Haddleton, P. Green, and H. Robertson, ``Nonferrous Alloys," in \textit{The Science and Engineering of Materials}, 3rd ed. Berlin, Germany: Springer, 1996, ch. 13, pp. 401--436.
+\bibitem{b3} J. W. Bray, ``Aluminum Mill and Engineered Wrought Products," in \textit{Properties and Selection: Nonferrous Alloys and Special-Purpose Materials} (ASM Handbook, Vol. 2). Russell Township, OH: ASM International, 1990.
+\bibitem{b4} Engineering ToolBox, (2018). \textit{Carbon Dioxide - Thermophysical Properties}. [Online] Available: \url{https://www.engineeringtoolbox.com/CO2-carbon-dioxide-properties-d_2017.html}
 \end{thebibliography}
 
 \end{document}
