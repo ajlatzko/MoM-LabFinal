@@ -20,6 +20,7 @@
 \usepackage{import}
 \usepackage{xifthen}
 \usepackage{pdfpages}
+\usepackage[siunitx]{circuitikz}
 \usepackage{transparent}
 \usepackage{microtype}
 
@@ -55,7 +56,7 @@ Section ????? \quad April 22, 2022}
 This experiment uses knowledge of the two-dimensional principal stress state to determine the internal pressure in an unopened soda can.
 Thin-walled pressure vessel theory is used in conjunction with Mohr’s theories on principal stresses to report the internal can pressure.
 This result is compared to another method based upon the ideal gas law.
-The hoop stress in the can is \textcolor{red}{XX $\pm$ XX} kPa and the longitudinal stress is \textcolor{red}{XX $\pm$ XX} kPa.
+The hoop stress in the can is \textcolor{red}{XX $\pm$ XX} Pa and the longitudinal stress is \textcolor{red}{XX $\pm$ XX} Pa.
 The internal pressure reported by the mechanics of materials approach is \textcolor{red}{XX $\pm$ XX} kPa.
 The internal pressure reported by the ideal gas law method is \textcolor{red}{XX $\pm$ XX} kPa.
 
@@ -82,10 +83,26 @@ As the strain gauge is a transducer, the strains are recorded as a voltage diffe
 \varepsilon=\frac{4\Delta V_{amp}}{V_s G_f}
 \end{equation}
 
-These strain gauges work in conjunction with a quarter Wheatstone bridge circuit to record meaningful voltage differences (Fig. \textcolor{red}{FIG NEEDED}).
+These strain gauges work in conjunction with a quarter Wheatstone bridge circuit to record meaningful voltage differences (Fig. \ref{fig:Wheat}).
 The strain gauge acts as a variable resistor.
 The change in voltage across the bridge as the strain gauge moves and varies its resistance is the voltage used to compute strain in \eqref{eq:strain}.
 Each member of the strain gauge rosette has its own individual Wheatstone bridge circuit fed by an excitation voltage.
+
+\begin{figure}[H]
+\centering
+\begin{circuitikz}[american voltages, scale=2]
+\ctikzset{label/align = straight}
+  \draw (0,0) to[V, invert, l_=$V_s$] (0,2) -- (2,2)
+  to[R, l_=$R_4$,*-*] (1,1)
+  to[R, l_=$R_3$, *-*] (2,0) -- (0,0);
+
+ \draw (2,2) to[R=$R_1$, *-*] (3,1) to (2.9,0.9) to (3.3,0.9) to[european resistor=$R_2$] (3.3,0.1) to (2.1,0.1) to (2,0);
+ \draw (1,1) to[rmeter, t=$V_g$] (3,1);
+ \draw (3.3,0.5) node[left=0.8em,align=left] {Strain\\gauge};
+ \end{circuitikz}
+\label{fig:Wheat}
+\caption{A simple quarter Wheatstone bridge circuit.}
+\end{figure}
 
 In plane strain, the shear strain $\gamma_{xy}$ can be computed using the 45$^\circ$ strain gauge value according to \eqref{eq:strainThet}, where $\varepsilon_x$ and $\varepsilon_y$ are the strains from the 0$^\circ$ and 90$^\circ$ strain gauges, and $\theta$ is 45$^\circ$ for this rosette [\textcolor{red}{CITATION NEEDED}].
 \begin{equation}
@@ -93,7 +110,7 @@ In plane strain, the shear strain $\gamma_{xy}$ can be computed using the 45$^\c
 \varepsilon_\theta=\frac{\varepsilon_x+\varepsilon_y}{2}-\frac{\varepsilon_x-\varepsilon_y}{2}\cos(2\theta)+\gamma_{xy}\sin(2\theta)
 \end{equation}
 
-While the experimenter should attempt to align the strain gauge rosette along the principal axes, along the canls central axis and along its circumference, the true principal strain should be found according to \eqref{eq:princStrain}, where $\varepsilon_{1,2}$ are the principal strains for the plane strain condition.
+While the experimenter should attempt to align the strain gauge rosette along the principal axes, along the can's central axis and along its circumference, the true principal strain should be found according to \eqref{eq:princStrain}, where $\varepsilon_{1,2}$ are the principal strains for the plane strain condition.
 This is based upon the concepts of Mohr’s circle, a geometric way to identify principal stresses and strains in a material.
 \begin{equation}
 \label{eq:princStrain}
@@ -110,7 +127,14 @@ In 2D strain, the well-known Hooke’s law relating stress to strain is given di
 \end{align}
 \end{subequations}
 For thin-walled pressure vessels, the 2D stress state is described by the longitudinal stress, along the vessel's central axis, and hoop stress, along its circumference, which can be computed with the principal strains above.
-The free-body diagram (Fig. \textcolor{red}{FIG NEEDED}) can be a helpful tool in relating these stresses to the can's internal pressure \cite{b1}.
+The free-body diagram (Fig. \ref{fig:PVessel}) can be a helpful tool in relating these stresses to the can's internal pressure \cite{b1}.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=3in]{PVessel}
+\caption{Free-body diagram of the pressures acting on the pressure vessel internally.}
+\label{fig:PVessel}
+\end{figure}
 
 The force balance for this diagram is \eqref{eq:vesselForce},
 \begin{equation}
