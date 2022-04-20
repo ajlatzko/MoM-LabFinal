@@ -21,6 +21,7 @@
 \usepackage{xifthen}
 \usepackage{pdfpages}
 \usepackage[siunitx]{circuitikz}
+\usepackage{siunitx}
 \usepackage{transparent}
 \usepackage{microtype}
 
@@ -41,6 +42,10 @@
 \setlength{\columnsep}{0.2in}
 \setlength{\columnwidth}{3.5in}
 
+\sisetup{per-mode = symbol,
+	inter-unit-product = \ensuremath{{}\cdot{}}
+}
+
 \begin{document}
 \title{Title Here}
 
@@ -51,6 +56,8 @@ Section ????? \quad April 22, 2022}
 
 \maketitle
 \thispagestyle{empty}
+
+\newcommand{\todo}{\textcolor{red}{???}}
 
 \begin{abstract}
 This experiment uses knowledge of the two-dimensional principal stress state to determine the internal pressure in an unopened soda can.
@@ -121,6 +128,7 @@ With principal strains in hand, the principal stresses in the vessel can thus be
 These principal stresses in the wall arise from the internal pressure pushing on the can wall, so knowing the principal stresses in the wall may lead to the pressure within the can.
 In 2D strain, the well-known Hooke’s law relating stress to strain is given directionally as \eqref{eq:sigma1} and \eqref{eq:sigma2}, where $\sigma_{1,2}$ are the principal stress on the wall, $E$ is the modulus of elasticity for the can material, aluminum alloy, $\nu$ is Poisson’s ratio, and $\varepsilon_{1,2}$ are the principal strains, found by using \eqref{eq:princStrain} with the recorded strains \cite{b1}.
 \begin{subequations}
+\label{eq:sigmas}
 \begin{align}
 \sigma_1&=\frac{E}{1-\nu^2}\left(\varepsilon_1+\nu\varepsilon_2\right) \label{eq:sigma1} \\
 \sigma_2&=\frac{E}{1-\nu^2}\left(\varepsilon_2+\nu\varepsilon_1\right) \label{eq:sigma2}
@@ -155,7 +163,7 @@ This hoop stress is related to its orthogonal longitudinal stress $\sigma_L$ wit
 \end{equation}
 
 These hoop and longitudinal stresses are assumed to be the principal stresses $\sigma_1$ and $\sigma_2$.
-Thus the relationships from \eqref{eq:hoopStress} and \eqref{eq:sigma1} can be rearranged to yield a functional relationship between principal strain and internal pressure \eqref{eq:princStrainFin} \cite{b1}.
+Thus the relationships from \eqref{eq:hoopStress} and \eqref{eq:sigmas} can be rearranged to yield a functional relationship between principal strain and internal pressure \eqref{eq:princStrainFin} \cite{b1}.
 \begin{equation}
 \label{eq:princStrainFin}
 \varepsilon_1=\frac{Pr}{2Et}(2-\nu)
@@ -185,7 +193,7 @@ This excitation voltage $V_s$ and the voltage difference $V_{amp}$ for each of t
 \subsection{Data Acquisition}
 
 The SADI DAQ which records the voltage difference is fed into a LabVIEW virtual instrument.
-The LabVIEW VI reads the $V_{amp}$ for each bridge as $V_{ampx}$ for the 0$^\circ$ gauge, $V_{ampt}$  for the 45$^\circ$ gauge, and $V_{ampy}$ for the 90$^\circ$ gauge.
+The LabVIEW VI reads the $V_{amp}$ for each bridge as $V_{amp_{x}}$ for the 0$^\circ$ gauge, $V_{amp_{t}}$  for the 45$^\circ$ gauge, and $V_{amp_{y}}$ for the 90$^\circ$ gauge.
 These are observed with a $\pm$5.12 V gain window.
 
 \subsection{Ideal Gas Law Pressure Determination Method}
@@ -210,13 +218,115 @@ The bottle is weighed again.
 
 \lipsum[21]
 
-\section*{Appendix}
+\section*{Appendix A: Uncertainty Calculation}
 
-\lipsum[22-24]
+The uncertainty of each variable is given by Table \ref{tab:Uncertainty}.
+The uncertainties in $V_{amp_{x}}$, $V_{amp_{t}}$, $V_{amp_{y}}$, and $V_{s}$ were calculated by finding the standard deviation of a large sample set of these measurements and approximating a 95\% confidence interval.
+The uncertainties in $d$ and $t$ were determined from the measuring device used, which was a micrometer.
+The uncertainties in the weights of the can and the water were determined from the scale that was used and analyzing the sensitivity of the last digit.
+The uncertainties in $E$, $\nu$, $G$, $R$, $M$, and $\rho$ were estimated to be $\pm$1\% of the given value due to variability associated with these material properties [\todo].
+\begin{table}[H]
+\renewcommand\arraystretch{1.25}
+\centering
+\caption{Uncertainty in Each Variable}
+\resizebox{3.5in}{!}{\begin{tabular}{ccc}
+\hline \hline
+Variable (Symbol) & Value & Uncertainty \\
+\hline
+Initial Amplified Voltage $x$ ($V_{amp_{xi}}$) & $-$0.1389 V & $\pm$0.00056 V \\
+Initial Amplified Voltage $t$ ($V_{amp_{ti}}$) & 0.0673 V & $\pm$0.00039 V \\
+Initial Amplified Voltage $y$ ($V_{amp_{yi}}$) & $-$0.1064 V & $\pm$0.00052 V \\
+Final Amplified Voltage $x$ ($V_{amp_{xf}}$) & $-$0.237 V & $\pm$0.0011 V \\
+Final Amplified Voltage $t$ ($V_{amp_{tf}}$) & $-$0.0253 V & $\pm$0.00027 V \\
+Final Amplified Voltage $y$ ($V_{amp_{yf}}$) & $-$0.1398 V & $\pm$0.00055 V \\
+Excitation Voltage ($V_s$) & 3.348 V &  $\pm$0.0015 V \\
+Can Diameter ($d$) & 65.9 mm & $\pm$0.896 mm \\
+Can Thickness ($t$) & 0.09 mm & $\pm$0.016 mm \\
+Modulus of Elasticity ($E$) \cite{b3} & 69 GPa & $\pm$0.69 GPa \\
+Poisson's Ratio ($\nu$) \cite{b3} & 0.35 & $\pm$0.0035 \\
+Shear Modulus ($G$) \cite{b3} & 25 GPa & $\pm$0.25 GPa \\
+Gauge Factor ($G_f$) & 2.09 & $\pm$0.01045 \\
+Gain ($A$) & 64 & $\pm$0.64 \\
+Initial Can Weight ($W_{ci}$) & 406.8 g & $\pm$0.1 g \\
+Final Can Weight ($W_{cf}$) & 406.2 g & $\pm$0.1 g \\
+Initial Water Weight ($W_{wi}$) & 152.01 g & $\pm$0.01 g \\
+Final Water Weight ($W_{wf}$) & 141.35 g & $\pm$0.01 g \\
+Temperature ($T$) & 22.8$^\circ$C & $\pm$0.28$^\circ$C \\
+Gas Constant ($R$) [\todo] & 8.31 \unit{\joule\per\kelvin\per\mole} & $\pm$0.083 \unit{\joule\per\kelvin\per\mole} \\
+CO\textsubscript{2} Molar Mass ($M$) \cite{b4} & 44 \unit{\gram\per\mole} & $\pm$0.44 \unit{\gram\per\mole} \\
+Density ($\rho$) [\todo] & 0.998 \unit{\gram\per\centi\meter\cubed} & $\pm$0.00998 \unit{\gram\per\centi\meter\cubed} \\
+\hline \hline
+\end{tabular}}
+\label{tab:Uncertainty}
+\end{table}
+
+\subsection*{Uncertainty in $\Delta V_{amp}$}
+
+The change in $V_{amp}$ for each strain gauge can be calculated using \eqref{eq:deltaVamp}, where $V_{amp_{xi}}$, $V_{amp_{ti}}$, and $V_{amp_{yi}}$ are the initial voltages and $V_{amp_{xf}}$, $V_{amp_{tf}}$, and $V_{amp_{yf}}$ are the final voltages.
+\begin{subequations}
+\label{eq:deltaVamp}
+\begin{align}
+\Delta V_{amp_{x}}&=V_{amp_{xf}}-V_{amp_{xi}} \\
+\Delta V_{amp_{t}}&=V_{amp_{tf}}-V_{amp_{ti}} \\
+\Delta V_{amp_{y}}&=V_{amp_{yf}}-V_{amp_{yi}}
+\end{align}
+\end{subequations}
+The uncertainty in each $\Delta V_{amp}$ can be calculated using the root sum square (RSS) method and \eqref{eq:deltaVamp}, where $U$ is the uncertainty.
 \begin{equation}
-x=\frac{-b\pm\sqrt{b^2-4ac}}{2a}
+\label{eq:UDeltaVamp}
+\resizebox{227pt}{!}{$U_{\Delta V_{amp}}=\left[U_{V_{amp_{i}}}^2 \left(\frac{\partial (\Delta V_{amp})}{\partial V_{amp_{i}}}\right)^2 + U_{V_{amp_{f}}}^2 \left(\frac{\partial (\Delta V_{amp})}{\partial V_{amp_{f}}}\right)^2 \right]^{\frac{1}{2}}$}
 \end{equation}
-\lipsum[25]
+For $V_{amp_{x}}$, using the values given in Table \ref{tab:Uncertainty} give an uncertainty in $\Delta V_{amp_{x}}$ of $\pm$0.27 V.
+
+\subsection*{Uncertainty in Strain}
+
+Strain is given by \eqref{eq:strain}.
+The uncertainty in strain can be calculated by using \eqref{eq:UStrain}.
+\begin{equation}
+\label{eq:UStrain}
+\resizebox{227pt}{!}{$U_{\varepsilon}=\left[U_{\Delta V_{amp}}^2 \left(\frac{\partial \varepsilon}{\partial (\Delta V_{amp})}\right)^2 + U_{A}^2 \left(\frac{\partial \varepsilon}{\partial A}\right)^2 + U_{V_s}^2 \left(\frac{\partial \varepsilon}{\partial V_s}\right)^2 + U_{G_f}^2 \left(\frac{\partial \varepsilon}{\partial G_f}\right)^2 \right]^{\frac{1}{2}}$}
+\end{equation}
+For $V_{amp_{x}}$, using Table \todo\ and the values given in Table \ref{tab:Uncertainty} give an uncertainty in strain $\varepsilon_x$ of $\pm$0.0025 mm/mm.
+
+\subsection*{Uncertainty in Shear Strain}
+
+Shear strain is given by (\todo).
+The uncertainty in shear strain can be calculated by using \eqref{eq:UShearStrain}.
+\begin{equation}
+\label{eq:UShearStrain}
+U_{\gamma_{xy}}=\left[U_{\varepsilon_x}^2 \left(\frac{\partial \gamma_{xy}}{\partial \varepsilon_x}\right)^2 + U_{\varepsilon_t}^2 \left(\frac{\partial \gamma_{xy}}{\partial \varepsilon_t}\right)^2 + U_{\varepsilon_y}^2 \left(\frac{\partial \gamma_{xy}}{\partial \varepsilon_y}\right)^2 \right]^{\frac{1}{2}}
+\end{equation}
+Using Table \todo, the uncertainty in shear strain is $\pm$0.0015 mm/mm.
+
+\subsection*{Uncertainty in Principle Strain}
+
+Principle strain is given by \eqref{eq:princStrain}.
+The uncertainty in principle strain can be calculated by using \eqref{eq:UPrincStrain}.
+\begin{equation}
+\label{eq:UPrincStrain}
+\resizebox{227pt}{!}{$U_{\varepsilon_{1,2}}=\left[U_{\varepsilon_x}^2 \left(\frac{\partial \varepsilon_{1,2}}{\partial \varepsilon_x}\right)^2 + U_{\varepsilon_y}^2 \left(\frac{\partial \varepsilon_{1,2}}{\partial \varepsilon_y}\right)^2 + U_{\gamma_{xy}}^2 \left(\frac{\partial \varepsilon_{1,2}}{\partial \gamma_{xy}}\right)^2 \right]^{\frac{1}{2}}$}
+\end{equation}
+For $\varepsilon_1$, using Table \todo\ gives an uncertainty in principle strain $\varepsilon_1$ of $\pm$0.0024 mm/mm.
+
+\subsection*{Uncertainty in Principle Stress}
+
+Principle stress is given by \eqref{eq:sigmas}.
+The uncertainty in principle stress can be calculated by using \eqref{eq:UPrincStress}.
+\begin{equation}
+\label{eq:UPrincStress}
+\resizebox{227pt}{!}{$U_{\sigma_{1,2}}=\left[U_{E}^2 \left(\frac{\partial \sigma_{1,2}}{\partial E}\right)^2 + U_{\nu}^2 \left(\frac{\partial \sigma_{1,2}}{\partial \nu}\right)^2 + U_{\varepsilon_1}^2 \left(\frac{\partial \sigma_{1,2}}{\partial \varepsilon_1}\right)^2 + U_{\varepsilon_2}^2 \left(\frac{\partial \sigma_{1,2}}{\partial \varepsilon_2}\right)^2 \right]^{\frac{1}{2}}$}
+\end{equation}
+For $\sigma_1$, using Table \todo\ and the values given in Table \ref{tab:Uncertainty} gives an uncertainty in principle stress $\sigma_1$ of $\pm$0.19 GPa.
+
+\subsection*{Uncertainty in Pressure from Strain}
+
+Pressure from strain is given by (\todo).
+The uncertainty in pressure can be calculated by using \eqref{eq:UPressStrain}.
+\begin{equation}
+\label{eq:UPressStrain}
+U\todo
+\end{equation}
+Using Table \todo\ and the values given in Table \ref{tab:Uncertainty} gives an uncertainty in pressure from strain of $\pm$\todo kPa.
 
 %\hfill\break
 %\noindent
@@ -227,7 +337,7 @@ x=\frac{-b\pm\sqrt{b^2-4ac}}{2a}
 %\bibitem{b2} F. P. Beer, E. R. Johnston, J. T. DeWolf, and D. F. Mazurek, \textit{Mechanics of Materials}, 8th ed. New York, NY: McGraw-Hill, 2020.
 \bibitem{b2} D. R. Askeland, F. Haddleton, P. Green, and H. Robertson, ``Nonferrous Alloys," in \textit{The Science and Engineering of Materials}, 3rd ed. Berlin, Germany: Springer, 1996, ch. 13, pp. 401--436.
 \bibitem{b3} J. W. Bray, ``Aluminum Mill and Engineered Wrought Products," in \textit{Properties and Selection: Nonferrous Alloys and Special-Purpose Materials} (ASM Handbook, Vol. 2). Russell Township, OH: ASM International, 1990.
-\bibitem{b4} Engineering ToolBox, (2018). \textit{Carbon Dioxide - Thermophysical Properties}. [Online] Available: \url{https://www.engineeringtoolbox.com/CO2-carbon-dioxide-properties-d_2017.html}
+\bibitem{b4} Engineering ToolBox (2018). \textit{Carbon Dioxide - Thermophysical Properties}. [Online] Available: \url{https://www.engineeringtoolbox.com/CO2-carbon-dioxide-properties-d_2017.html}
 \end{thebibliography}
 
 \end{document}
