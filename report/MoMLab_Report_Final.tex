@@ -1,5 +1,7 @@
 \documentclass[10pt,journal,letterpaper]{IEEEtran}
 \usepackage[letterpaper, left=0.65in, right=0.65in, bottom=0.7in, top=0.7in]{geometry}
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta}
 \usepackage{mathptmx}
 \usepackage{lipsum}
 \usepackage{cite}
@@ -29,7 +31,6 @@
 
 \newcommand{\incfig}[1]{%
 	\centering
-	\def\svgwidth{3.5in}
     \import{./figures/}{#1.pdf_tex}
 }
     
@@ -49,9 +50,9 @@
 \begin{document}
 \title{Title Here}
 
-\author{\IEEEauthorblockN{\huge{Group 50 \\}}
+\author{\IEEEauthorblockN{\huge{Hornilla, Joshua \\ Hutt, Kateland \\ Latzko, Alexander \\ Sukhadia, Kenni \\}}
 \IEEEauthorblockA{
-Section ????? \quad April 22, 2022}
+Group 50 \quad April 22, 2022}
 }
 
 \maketitle
@@ -61,12 +62,11 @@ Section ????? \quad April 22, 2022}
 
 \begin{abstract}
 This experiment uses knowledge of the two-dimensional principal stress state to determine the internal pressure in an unopened soda can.
-Thin-walled pressure vessel theory is used in conjunction with Mohr’s theories on principal stresses to report the internal can pressure.
+Thin-walled pressure vessel theory is used in conjunction with theories on principal stresses to report the internal can pressure.
 This result is compared to another method based upon the ideal gas law.
-The hoop stress in the can is \textcolor{red}{XX $\pm$ XX} Pa and the longitudinal stress is \textcolor{red}{XX $\pm$ XX} Pa.
-The internal pressure reported by the mechanics of materials approach is \textcolor{red}{XX $\pm$ XX} kPa.
-The internal pressure reported by the ideal gas law method is \textcolor{red}{XX $\pm$ XX} kPa.
-
+The hoop stress in the can is 78.11 $\pm$ 1.128 MPa and the longitudinal stress is 46.27 $\pm$ 0.677 MPa.
+The internal pressure reported by the mechanics of materials approach is 252 $\pm$ 43.40 kPa.
+The internal pressure reported by the ideal gas law method is 258 $\pm$ 57.15 kPa.
 \end{abstract}
 
 \begin{IEEEkeywords}
@@ -79,15 +79,15 @@ As such, knowing the operating and current pressures in these vessels is imperat
 The stresses in the walls of these vessels can be used to determine the overall pressure within the vessel.
 This study seeks the pressure in a sealed soda can.
 
-The can is said to be a thin-walled pressure vessel.
-The diameter of the can is much greater than its wall thickness, leading to the  assumption that there is no stress in the direction of the thickness of the can, so the stresses in the vessel wall can be analyzed as a two-dimensional stress state, the plane stress condition.
+The can is a thin-walled pressure vessel.
+The diameter of the can is much greater than its wall thickness, leading to the assumption that there is no stress in the direction of the thickness of the can, so the stresses in the vessel wall can be analyzed as a two-dimensional stress state, the plane stress condition.
 
 To analyze this stress state, strain gauges can be affixed in a 0-45-90$^\circ$ rosette on the side of the can to record the strains on the walls.
 Using multiple strain gauges allows an experimenter to determine the complete strain state, including the shear strain.
-As the strain gauge is a transducer, the strains are recorded as a voltage difference, $V_{amp}$, and are calculated according to \eqref{eq:strain},  where $V_s$ is the excitation voltage for the circuit, and $G_f$ is the gauge factor of the strain gauge, given by the manufacturer.
+As the strain gauge is a transducer, the strains are recorded as a voltage difference, $\Delta V_{g}$, and are calculated according to \eqref{eq:strain}, where $V_s$ is the excitation voltage for the circuit, $G_f$ is the gauge factor of the strain gauge, given by the manufacturer, and $A$ is the gain of the amplifier.
 \begin{equation}
 \label{eq:strain}
-\varepsilon=\frac{4\Delta V_{amp}}{V_s G_f}
+\varepsilon=\frac{4\Delta V_g}{A V_s G_f}
 \end{equation}
 
 These strain gauges work in conjunction with a quarter Wheatstone bridge circuit to record meaningful voltage differences (Fig. \ref{fig:Wheat}).
@@ -111,7 +111,7 @@ Each member of the strain gauge rosette has its own individual Wheatstone bridge
 \caption{A simple quarter Wheatstone bridge circuit.}
 \end{figure}
 
-In plane strain, the shear strain $\gamma_{xy}$ can be computed using the 45$^\circ$ strain gauge value according to \eqref{eq:strainThet}, where $\varepsilon_x$ and $\varepsilon_y$ are the strains from the 0$^\circ$ and 90$^\circ$ strain gauges, and $\theta$ is 45$^\circ$ for this rosette [\textcolor{red}{CITATION NEEDED}].
+In plane strain, the shear strain $\gamma_{xy}$ can be computed using the 45$^\circ$ strain gauge value according to \eqref{eq:strainThet}, where $\varepsilon_x$ and $\varepsilon_y$ are the strains from the 0$^\circ$ and 90$^\circ$ strain gauges, and $\theta$ is 45$^\circ$ for this rosette \cite{b5}.
 \begin{equation}
 \label{eq:strainThet}
 \varepsilon_\theta=\frac{\varepsilon_x+\varepsilon_y}{2}-\frac{\varepsilon_x-\varepsilon_y}{2}\cos(2\theta)+\gamma_{xy}\sin(2\theta)
@@ -214,6 +214,54 @@ The bottle is weighed again.
 
 \lipsum[11-20]
 
+\begin{figure}[H]
+\label{fig:VampTime}
+\def\svgwidth{3in}
+\incfig{VampTime}
+\caption{Graph thing}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\label{fig:2dSquare}
+\begin{tikzpicture}
+%square
+\draw[thick] (-1,1) -- (1,1) -- (1,-1) -- (-1,-1) -- cycle;
+
+%arrows
+\draw[thick,-latex] (0,1) -- (0,2) node[below right] {$\sigma_2=78.1$ MPa};
+\draw[thick,-latex] (1,0) -- (2,0)  node[below=8pt,right=-2em] {$\sigma_1=46.3$ MPa};
+\draw[thick,-latex] (0,-1) -- (0,-2);
+\draw[thick,-latex] (-1,0) -- (-2,0);
+\end{tikzpicture}
+\caption{2D principal stress element for pressure vessel.}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\label{fig:Mohr}
+\begin{tikzpicture}[scale=0.625]
+%axis
+\draw[thick,latex-latex] (0,-3) -- (0,3) node[anchor=north west] {$\tau$};
+\draw[thick,-latex] (0,0) -- (12,0) node[anchor=north] {$\sigma$};
+
+%circle
+\draw[thick] (6.22,0) circle (1.59);
+
+%taumax
+\draw[thick,dashed] (6.22,1.59) -- (0,1.59) node[left] {$\tau_{max}$};
+
+%nodes
+\filldraw[black] (4.63,0) circle (2.5pt);
+\node[above left] at (4.63,0) {$\sigma_1$};
+\node[below left] at (4.63,0) {46.3 MPa};
+\filldraw[black] (7.81,0) circle (2.5pt);
+\node[above right] at (7.81,0) {$\sigma_2$};
+\node[below right] at (7.81,0) {78.1 MPa};
+\end{tikzpicture}
+\caption{Principal stresses plotted on Mohr’s circle diagram.}
+\end{figure}
+
 \section{Conclusion}
 
 \lipsum[21]
@@ -224,7 +272,7 @@ The uncertainty of each variable is given by Table \ref{tab:Uncertainty}.
 The uncertainties in $V_{amp_{x}}$, $V_{amp_{t}}$, $V_{amp_{y}}$, and $V_{s}$ were calculated by finding the standard deviation of a large sample set of these measurements and approximating a 95\% confidence interval.
 The uncertainties in $d$ and $t$ were determined from the measuring device used, which was a micrometer.
 The uncertainties in the weights of the can and the water were determined from the scale that was used and analyzing the sensitivity of the last digit.
-The uncertainties in $E$, $\nu$, $G$, $R$, $M$, and $\rho$ were estimated to be $\pm$1\% of the given value due to variability associated with these material properties [\todo].
+The uncertainties in $E$, $\nu$, $R$, $M$, and $\rho$ were estimated to be $\pm$1\% of the given value due to variability associated with these material properties \cite{b8}.
 \begin{table}[H]
 \renewcommand\arraystretch{1.25}
 \centering
@@ -234,27 +282,27 @@ The uncertainties in $E$, $\nu$, $G$, $R$, $M$, and $\rho$ were estimated to be 
 Variable (Symbol) & Value & Uncertainty \\
 \hline
 Initial Amplified Voltage $x$ ($V_{amp_{xi}}$) & $-$0.1389 V & $\pm$0.00056 V \\
-Initial Amplified Voltage $t$ ($V_{amp_{ti}}$) & 0.0673 V & $\pm$0.00039 V \\
+Initial Amplified Voltage $\theta$ ($V_{amp_{\theta i}}$) & 0.0673 V & $\pm$0.00039 V \\
 Initial Amplified Voltage $y$ ($V_{amp_{yi}}$) & $-$0.1064 V & $\pm$0.00052 V \\
 Final Amplified Voltage $x$ ($V_{amp_{xf}}$) & $-$0.237 V & $\pm$0.0011 V \\
-Final Amplified Voltage $t$ ($V_{amp_{tf}}$) & $-$0.0253 V & $\pm$0.00027 V \\
+Final Amplified Voltage $\theta$ ($V_{amp_{\theta f}}$) & $-$0.0253 V & $\pm$0.00027 V \\
 Final Amplified Voltage $y$ ($V_{amp_{yf}}$) & $-$0.1398 V & $\pm$0.00055 V \\
 Excitation Voltage ($V_s$) & 3.348 V &  $\pm$0.0015 V \\
 Can Diameter ($d$) & 65.9 mm & $\pm$0.896 mm \\
 Can Thickness ($t$) & 0.09 mm & $\pm$0.016 mm \\
 Modulus of Elasticity ($E$) \cite{b3} & 69 GPa & $\pm$0.69 GPa \\
 Poisson's Ratio ($\nu$) \cite{b3} & 0.35 & $\pm$0.0035 \\
-Shear Modulus ($G$) \cite{b3} & 25 GPa & $\pm$0.25 GPa \\
+%Shear Modulus ($G$) \cite{b3} & 25 GPa & $\pm$0.25 GPa \\
 Gauge Factor ($G_f$) & 2.09 & $\pm$0.01045 \\
 Gain ($A$) & 64 & $\pm$0.64 \\
 Initial Can Weight ($W_{ci}$) & 406.8 g & $\pm$0.1 g \\
 Final Can Weight ($W_{cf}$) & 406.2 g & $\pm$0.1 g \\
-Initial Water Weight ($W_{wi}$) & 152.01 g & $\pm$0.01 g \\
-Final Water Weight ($W_{wf}$) & 141.35 g & $\pm$0.01 g \\
+Initial Water Weight ($W_{wi}$) & 152.0 g & $\pm$0.1 g \\
+Final Water Weight ($W_{wf}$) & 141.4 g & $\pm$0.1 g \\
 Temperature ($T$) & 22.8$^\circ$C & $\pm$0.28$^\circ$C \\
-Gas Constant ($R$) [\todo] & 8.31 \unit{\joule\per\kelvin\per\mole} & $\pm$0.083 \unit{\joule\per\kelvin\per\mole} \\
+Gas Constant ($R$) \cite{b6} & 8.31 \unit{\joule\per\kelvin\per\mole} & $\pm$0.083 \unit{\joule\per\kelvin\per\mole} \\
 CO\textsubscript{2} Molar Mass ($M$) \cite{b4} & 44 \unit{\gram\per\mole} & $\pm$0.44 \unit{\gram\per\mole} \\
-Density ($\rho$) [\todo] & 0.998 \unit{\gram\per\centi\meter\cubed} & $\pm$0.00998 \unit{\gram\per\centi\meter\cubed} \\
+Density of Water ($\rho$) \cite{b7} & 0.998 \unit{\gram\per\centi\meter\cubed} & $\pm$0.00998 \unit{\gram\per\centi\meter\cubed} \\
 \hline \hline
 \end{tabular}}
 \label{tab:Uncertainty}
@@ -262,12 +310,12 @@ Density ($\rho$) [\todo] & 0.998 \unit{\gram\per\centi\meter\cubed} & $\pm$0.009
 
 \subsection*{Uncertainty in $\Delta V_{amp}$}
 
-The change in $V_{amp}$ for each strain gauge can be calculated using \eqref{eq:deltaVamp}, where $V_{amp_{xi}}$, $V_{amp_{ti}}$, and $V_{amp_{yi}}$ are the initial voltages and $V_{amp_{xf}}$, $V_{amp_{tf}}$, and $V_{amp_{yf}}$ are the final voltages.
+The change in $V_{amp}$ for each strain gauge can be calculated using \eqref{eq:deltaVamp}, where $V_{amp_{xi}}$, $V_{amp_{\theta i}}$, and $V_{amp_{yi}}$ are the initial voltages and $V_{amp_{xf}}$, $V_{amp_{\theta f}}$, and $V_{amp_{yf}}$ are the final voltages.
 \begin{subequations}
 \label{eq:deltaVamp}
 \begin{align}
 \Delta V_{amp_{x}}&=V_{amp_{xf}}-V_{amp_{xi}} \\
-\Delta V_{amp_{t}}&=V_{amp_{tf}}-V_{amp_{ti}} \\
+\Delta V_{amp_{\theta}}&=V_{amp_{\theta f}}-V_{amp_{\theta i}} \\
 \Delta V_{amp_{y}}&=V_{amp_{yf}}-V_{amp_{yi}}
 \end{align}
 \end{subequations}
@@ -324,9 +372,39 @@ Pressure from strain is given by (\todo).
 The uncertainty in pressure can be calculated by using \eqref{eq:UPressStrain}.
 \begin{equation}
 \label{eq:UPressStrain}
-U\todo
+U_{P}=\left[U_{\sigma_{1,2}}^2 \left(\frac{\partial P}{\partial \sigma_{1,2}}\right)^2 + U_{t}^2 \left(\frac{\partial P}{\partial t}\right)^2 + U_{d}^2 \left(\frac{\partial P}{\partial d}\right)^2 \right]^{\frac{1}{2}}
 \end{equation}
-Using Table \todo\ and the values given in Table \ref{tab:Uncertainty} gives an uncertainty in pressure from strain of $\pm$\todo kPa.
+Using Table \todo\ and the values given in Table \ref{tab:Uncertainty} gives an uncertainty in pressure from strain of $\pm$43.4 kPa.
+
+\subsection*{Uncertainty in Amount of Substance}
+
+The amount of substance $n$ is given by (\todo).
+The uncertainty in the amount of substance can be calculated by using \eqref{eq:Uamt}.
+\begin{equation}
+\label{eq:Uamt}
+\resizebox{227pt}{!}{$U_{n}=\left[U_{W_{ci}}^2 \left(\frac{\partial n}{\partial W_{ci}}\right)^2 + U_{W_{cf}}^2 \left(\frac{\partial n}{\partial W_{cf}}\right)^2 + U_{M}^2 \left(\frac{\partial n}{\partial M}\right)^2 \right]^{\frac{1}{2}}$}
+\end{equation}
+Using Table \todo\ and the values given in Table \ref{tab:Uncertainty} gives an uncertainty in the amount of substance of $\pm$43.4 mol.
+
+\subsection*{Uncertainty in Volume}
+
+Volume is given by (\todo).
+The uncertainty in volume can be calculated by using \eqref{eq:Uvol}.
+\begin{equation}
+\label{eq:Uvol}
+\resizebox{227pt}{!}{$U_{V}=\left[U_{W_{wi}}^2 \left(\frac{\partial V}{\partial W_{wi}}\right)^2 + U_{W_{wf}}^2 \left(\frac{\partial V}{\partial W_{wf}}\right)^2 + U_{\rho}^2 \left(\frac{\partial V}{\partial \rho}\right)^2 \right]^{\frac{1}{2}}$}
+\end{equation}
+Using Table \todo\ and the values given in Table \ref{tab:Uncertainty} gives an uncertainty in volume of $\pm$0.108 \unit{\centi\meter\cubed}.
+
+\subsection*{Uncertainty in Pressure from Ideal Gas Law}
+
+Pressure from the ideal gas law is given by (\todo).
+The uncertainty in pressure can be calculated by using \eqref{eq:UPressIGL}.
+\begin{equation}
+\label{eq:UPressIGL}
+\resizebox{227pt}{!}{$U_{P_{IGL}}=\left[U_{n}^2 \left(\frac{\partial P_{IGL}}{\partial n}\right)^2 + U_{R}^2 \left(\frac{\partial P_{IGL}}{\partial R}\right)^2 + U_{T}^2 \left(\frac{\partial P_{IGL}}{\partial T}\right)^2 + U_{V}^2 \left(\frac{\partial P_{IGL}}{\partial V}\right)^2 \right]^{\frac{1}{2}}$}
+\end{equation}
+Using Table \todo\, the values given in Table \ref{tab:Uncertainty}, and the uncertainties calculated in the previous sections gives an uncertainty in pressure from the ideal gas law of $\pm$57.2 kPa.
 
 %\hfill\break
 %\noindent
@@ -334,10 +412,14 @@ Using Table \todo\ and the values given in Table \ref{tab:Uncertainty} gives an 
 
 \begin{thebibliography}{00}
 \bibitem{b1} G. Subhash and S. Ridgeway, ``Thin-walled Pressure Vessels," in \textit{Mechanics of Materials Laboratory Course}. San Rafael, CA: Morgan \& Claypool, 2018, ch. 3, pp. 113--132.
-%\bibitem{b2} F. P. Beer, E. R. Johnston, J. T. DeWolf, and D. F. Mazurek, \textit{Mechanics of Materials}, 8th ed. New York, NY: McGraw-Hill, 2020.
+\bibitem{b5} S. Ridgeway. (2022). Lab 3 Discussion, Final Project Track 1 [PowerPoint slides]. Available: \url{https://ufl.instructure.com/courses/447927/files/67779901}
 \bibitem{b2} D. R. Askeland, F. Haddleton, P. Green, and H. Robertson, ``Nonferrous Alloys," in \textit{The Science and Engineering of Materials}, 3rd ed. Berlin, Germany: Springer, 1996, ch. 13, pp. 401--436.
 \bibitem{b3} J. W. Bray, ``Aluminum Mill and Engineered Wrought Products," in \textit{Properties and Selection: Nonferrous Alloys and Special-Purpose Materials} (ASM Handbook, Vol. 2). Russell Township, OH: ASM International, 1990.
-\bibitem{b4} Engineering ToolBox (2018). \textit{Carbon Dioxide - Thermophysical Properties}. [Online] Available: \url{https://www.engineeringtoolbox.com/CO2-carbon-dioxide-properties-d_2017.html}
+\bibitem{b4} Engineering ToolBox. (2018). \textit{Carbon Dioxide - Thermophysical Properties}. [Online] Available: \url{https://www.engineeringtoolbox.com/CO2-carbon-dioxide-properties-d_2017.html}
+\bibitem{b6} Engineering ToolBox. (2004). \textit{Universal and Individual Gas Constants}. [Online] Available: \url{https://www.engineeringtoolbox.com/individual-universal-gas-constant-d_588.html}
+\bibitem{b7} Engineering ToolBox. (2003). \textit{Water - Density, Specific Weight and Thermal Expansion Coefficients}. [Online] Available: \url{https://www.engineeringtoolbox.com/water-density-specific-weight-d_595.html}
+\bibitem{b8} S. Ridgeway. (2022). Lab 2 Report, Uncertainty [PowerPoint slides]. Available: \url{https://ufl.instructure.com/courses/447927/files/66505329}
+\bibitem{b9} H. de Grys, ``Determining the pressure inside an unopened carbonated beverage," Journal of Chemical Education, vol. 84, no. 7, p. 1117, 2007.
 \end{thebibliography}
 
 \end{document}
